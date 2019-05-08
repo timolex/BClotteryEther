@@ -6,6 +6,8 @@ const mapStateToProps = state => {
     accounts: state.accounts,
     SimpleStorage: state.contracts.SimpleStorage,
     TutorialToken: state.contracts.TutorialToken,
+    RandomNumberGenerator: state.contracts.RandomNumberGenerator,
+    RandomNumberGenerator2: state.contracts.RandomNumberGenerator2,
     drizzleStatus: state.drizzleStatus,
   };
 };
