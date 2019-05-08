@@ -29,6 +29,7 @@ export default ({ accounts }) => (
       <p>
         <strong>Stored Value: </strong>
         <ContractData contract="SimpleStorage" method="storedData" />
+        <ContractData contract="SimpleStorage" method="storedNumber" />
       </p>
       <ContractForm contract="SimpleStorage" method="set" />
     </div>
