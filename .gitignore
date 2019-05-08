@@ -164,3 +164,6 @@ yarn.lock
 package-lock.json
 
 # End of https://www.gitignore.io/api/node,solidity,soliditytruffle
+
+# contract JSONs
+/app/src/contracts/*.json
