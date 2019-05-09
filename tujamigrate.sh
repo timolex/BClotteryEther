@@ -18,7 +18,6 @@ echo -e 'Deploying smart contracts ...\n'
 echo -e 'truffle migrate --reset --compile-all'
 
 truffle migrate --reset --compile-all
-truffle migrate --reset --compile-all
 
 echo -e 'If npm was running, just refresh your browser tab now.\n'
 echo 'Script terminates, tu ja!'

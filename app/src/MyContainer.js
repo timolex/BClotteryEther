@@ -4,7 +4,6 @@ import { drizzleConnect } from "drizzle-react";
 const mapStateToProps = state => {
   return {
     accounts: state.accounts,
-    SimpleStorage: state.contracts.SimpleStorage,
     RandomNumberGenerator: state.contracts.RandomNumberGenerator,
     Lottery: state.contracts.Lottery,
     drizzleStatus: state.drizzleStatus,

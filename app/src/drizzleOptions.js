@@ -1,4 +1,3 @@
-import SimpleStorage from "./contracts/SimpleStorage.json";
 import RandomNumberGenerator from "./contracts/RandomNumberGenerator.json"
 import Lottery from "./contracts/Lottery.json"
 
@@ -10,9 +9,9 @@ const options = {
       url: "ws://127.0.0.1:9545",
     },
   },
-  contracts: [SimpleStorage, RandomNumberGenerator, Lottery],
+  contracts: [RandomNumberGenerator, Lottery],
   events: {
-    SimpleStorage: ["StorageSet"],
+    
   },
   polls: {
     accounts: 1500,
