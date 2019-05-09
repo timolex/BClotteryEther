@@ -11,7 +11,7 @@ const options = {
   },
   contracts: [RandomNumberGenerator, Lottery],
   events: {
-    
+
   },
   polls: {
     accounts: 1500,
