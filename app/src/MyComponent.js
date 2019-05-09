@@ -45,5 +45,16 @@ export default ({ accounts }) => (
       <ContractForm contract="RandomNumberGenerator" method="getRandomNumber" />
     </div>
 
+    <div className="section">
+      <h2>Lottery</h2>
+      <p>LotteryTest: Get number 5 back as defined number</p>
+      <p>
+        <strong>Defined Number: </strong>
+
+        <ContractData contract="Lottery" method="randNr" />
+      </p>
+      <ContractForm contract="Lottery" method="getDefinedNumber" />
+    </div>
+
   </div>
 );
