@@ -1,6 +1,5 @@
 import SimpleStorage from "./contracts/SimpleStorage.json";
-import ComplexStorage from "./contracts/ComplexStorage.json";
-import TutorialToken from "./contracts/TutorialToken.json";
+import RandomNumberGenerator from "./contracts/RandomNumberGenerator.json"
 
 const options = {
   web3: {
@@ -10,7 +9,7 @@ const options = {
       url: "ws://127.0.0.1:9545",
     },
   },
-  contracts: [SimpleStorage, ComplexStorage, TutorialToken],
+  contracts: [SimpleStorage, RandomNumberGenerator],
   events: {
     SimpleStorage: ["StorageSet"],
   },
