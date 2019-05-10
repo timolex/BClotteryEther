@@ -32,13 +32,11 @@ export default ({ accounts }) => (
 
     <div className="section">
       <h2>Lottery</h2>
-      <p>LotteryTest: Get number 5 back as defined number</p>
-      <p>
-        <strong>Defined Number: </strong>
+      <p>Choose a number for the lottery (1 Ether):</p>
+      <ContractForm contract="Lottery" method="buyTicket" sendArgs={{value: 1000000000000000000}}/>
 
-        <ContractData contract="Lottery" method="randNr" />
-      </p>
-      <ContractForm contract="Lottery" method="getDefinedNumber" />
+      <p> Your lottery tickets:</p>
+      <ContractData contract="Lottery" method="getTickets" />
     </div>
 
   </div>

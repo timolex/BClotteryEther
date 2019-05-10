@@ -7,10 +7,4 @@ contract RandomNumberGenerator {
         randNr = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251);
         return randNr;
     }
-
-    function getDefinedNumber() public returns (uint8){
-        randNr = 5;
-        return randNr;
-    }
-
 }
