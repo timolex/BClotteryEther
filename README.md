@@ -21,5 +21,5 @@
 
 4. Please run `$ truffle compile` and resolve occasional errors :) .
 
-5. At this point, you should be good to go for using the Bash script `tujamigrate.sh`, which allows for automatically resetting the JSONs in `app/src/contracts` (as recommended by [@jonixis](github.com/jonixis)) and running `truffle migrate --reset`. This script can be used from now on after every time the smart contracts have been modified. Please run this script as follows:
-  `./tujascript.sh`
+5. At this point, you should be good to go for using the Bash script `tujamigrate.sh`, which allows for automatically resetting the JSONs in `app/src/contracts` (as recommended by [@jonixis](https://github.com/jonixis)) and running `truffle migrate --reset`. This script can be used from now on after every time the smart contracts have been modified. Please run this script as follows:
+  `./tujamigrate.sh`
