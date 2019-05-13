@@ -4,8 +4,8 @@ contract Lottery {
   enum State { Closed, Open } // Define states as enum
 
   State lotteryState;
-  mapping(address => uint8[]) soldTickets; // Map holding tickets and buyer addresses
-  mapping(uint8 => address payable[]) playersByTicket; // Map holding tickets and buyer addresses
+  mapping(address => uint32[]) soldTickets; // Map holding tickets and buyer addresses
+  mapping(uint32 => address payable[]) playersByTicket; // Map holding tickets and buyer addresses
   uint256 public amountPerAddress;
   uint8 public winningNr;
 
@@ -13,14 +13,14 @@ contract Lottery {
     lotteryState = State.Closed;
   }
 
-  function buyTicket(uint8 _ticketNr) public payable {
+  function buyTicket(uint32 _ticketNr) public payable {
     require(_ticketNr < 251 && _ticketNr > 0, "Ticket number must be in range [0, 250]"); // Prevent overflow of uint8
     require(msg.value >= 1, "A ticket costs 1 Ether"); // Checks if enough ether is sent to buy a lottery ticket
     soldTickets[msg.sender].push(_ticketNr);
     playersByTicket[_ticketNr].push(msg.sender);
   }
 
-  function getOwnTickets() public view returns (uint8[] memory) {
+  function getOwnTickets() public view returns (uint32[] memory) {
     return soldTickets[msg.sender];
   }
 
@@ -43,7 +43,7 @@ contract Lottery {
     if (playersByTicket[winningNr].length > 0) {
       amountPerAddress = address(this).balance / playersByTicket[winningNr].length;
 
-      for (uint8 i = 0; i < playersByTicket[winningNr].length; i++){
+      for (uint32 i = 0; i < playersByTicket[winningNr].length; i++){
         playersByTicket[winningNr][i].transfer(amountPerAddress);
       }
 
