@@ -4,6 +4,8 @@ contract Lottery {
   enum State { Closed, Open } // Define states as enum
 
   State lotteryState;
+  address oracleAddress;
+
   mapping(address => uint8[]) soldTickets; // Map holding tickets and buyer addresses
 
   constructor() public {
@@ -26,6 +28,11 @@ contract Lottery {
 
   function setLotteryState(State _lotteryState) public {
     lotteryState = _lotteryState;
+  }
+
+  function callOracle(address _oracleAddress) public {
+    RandomNumberGenerator oracle = RandomNumberGenerator(_oracleAddress);
+    /* uint8 winnerNr = oracle.getRandomNumber(); */
   }
 
 }
