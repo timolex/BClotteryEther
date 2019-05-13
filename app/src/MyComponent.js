@@ -70,5 +70,25 @@ export default ({ accounts }) => (
       <ContractData contract="Lottery" method="getOwnTickets" />
     </div>
 
+    <div className="section">
+      <h2>Pot</h2>
+      <p>Amount of the jackpot (Ether):&nbsp;
+      <ContractData contract="Lottery" method="getPotOfLotteryRound" /> </p>
+    </div>
+
+    <div className="section">
+      <h2>Winners</h2>
+      <p>End Game and determine Winner: &nbsp;
+        <ContractForm contract="Lottery" method="getWinners" />
+      </p>
+      <p>Winners:&nbsp;
+        <ContractData contract="Lottery" method="printWinnerAccount" />
+      </p>
+      <p>Amount won:&nbsp;
+        <ContractData contract="Lottery" method="amountPerAddress" />
+      </p>
+    </div>
+
+
   </div>
 );
