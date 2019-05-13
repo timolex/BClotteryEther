@@ -15,13 +15,17 @@ class MyComponent extends React.Component {
     this.contracts = context.drizzle.contracts
   }
 
+  drawWinners() {
+    // Get address of random number generator smart contract
+    let randomNumberGeneratorAddress = null;
+    if (this.props.drizzleStatus.initialized) {
+      randomNumberGeneratorAddress = this.contracts.RandomNumberGenerator.address;
+    }
+    // Call lottery contract
+    this.contracts.Lottery.methods.drawWinners(randomNumberGeneratorAddress).send();
+  }
+
   render() {
-
-    let randomNumberGeneratorAddress =
-      this.props.drizzleStatus.initialized ?
-      this.contracts.RandomNumberGenerator.address :
-      'Address not found';
-
     return (
       <div className="App">
         <div>
@@ -35,48 +39,54 @@ class MyComponent extends React.Component {
         </div>
 
         <div className="section">
-          <h2>RandomNumberGenerator</h2>
-          <p>Generate a random number.</p>
-          <p>
-            <strong>Random Number: </strong>
-
-            <ContractData contract="RandomNumberGenerator" method="randNr" />
-          </p>
-          <ContractForm contract="RandomNumberGenerator" method="getRandomNumber" />
-        </div>
-
-        <div className="section">
           <h2>Lottery</h2>
           <p>Choose a number for the lottery (1 Ether):</p>
-          <ContractForm contract="Lottery" method="buyTicket" sendArgs={{value: 1000000000000000000}} render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
-            <form onSubmit={handleSubmit}>
-              {inputs.map((input, index) => (
-              <>
-                <input style={{ fontSize: 18, width: 80}} key={input.name} type={inputTypes[index]} name={input.name} value={state[input.name]} placeholder="Number" onChange={handleInputChange} min="1" max="250" />
-                <button style={{ marginLeft: 10}} key="submit" type="button" onClick={handleSubmit}>
-                  Enter
-                </button>
-              </>
-              ))}
-            </form>
+          <ContractForm
+            contract="Lottery"
+            method="buyTicket"
+            sendArgs={{value: 1000000000000000000}}
+            render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
+              <form onSubmit={handleSubmit}>
+                {inputs.map((input, index) => (
+                  <>
+                  <input
+                    style={{ fontSize: 18, width: 80}}
+                    key={input.name} type={inputTypes[index]}
+                    name={input.name}
+                    value={state[input.name]}
+                    placeholder="Number"
+                    onChange={handleInputChange}
+                    min="1"
+                    max="250"
+                  />
+                  <button
+                    style={{ marginLeft: 10}}
+                    key="submit"
+                    type="button"
+                    onClick={handleSubmit}
+                    >
+                    Enter
+                  </button>
+                  </>
+                ))}
+              </form>
             )}
-            />
-
-            <p> Your lottery tickets:</p>
-            <ContractData contract="Lottery" method="getOwnTickets" />
+          />
+          <p> Your lottery tickets:</p>
+          <ContractData contract="Lottery" method="getOwnTickets" />
         </div>
 
         <div className="section">
-          <h2>Pot</h2>
+          <h3>Pot</h3>
           <p>Amount of the jackpot (Ether):&nbsp;
             <ContractData contract="Lottery" method="getPotOfLotteryRound" />
           </p>
         </div>
 
         <div className="section">
-          <h2>Winners</h2>
-          <p>End Game and determine Winner: &nbsp;
-            <ContractForm contract="Lottery" method="getWinners" />
+          <h3>Winners</h3>
+          <p>
+            <button onClick={this.drawWinners.bind(this)}>Draw Winners</button>
           </p>
           <p>Winners:&nbsp;
             <ContractData contract="Lottery" method="printWinnerAccount" />
