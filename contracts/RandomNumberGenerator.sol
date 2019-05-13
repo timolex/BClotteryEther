@@ -4,7 +4,7 @@ contract RandomNumberGenerator {
     uint8 public randNr = 0;
 
     function getRandomNumber() public returns (uint8) {
-        randNr = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251);
+        randNr = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251) + 1;
         return randNr;
     }
 }

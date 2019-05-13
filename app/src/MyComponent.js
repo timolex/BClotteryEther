@@ -36,7 +36,7 @@ export default ({ accounts }) => (
       <ContractForm contract="Lottery" method="buyTicket" sendArgs={{value: 1000000000000000000}}/>
 
       <p> Your lottery tickets:</p>
-      <ContractData contract="Lottery" method="getTickets" />
+      <ContractData contract="Lottery" method="getOwnTickets" />
     </div>
 
   </div>
