@@ -36,13 +36,47 @@ contract Lottery {
   function setLotteryState(State _lotteryState) public {
     lotteryState = _lotteryState;
   }
-  
+
   function callOracle(address _oracleAddress) public {
     RandomNumberGenerator oracle = RandomNumberGenerator(_oracleAddress);
     /* uint8 winnerNr = oracle.getRandomNumber(); */
   }
 
 
+  function getPotOfLotteryRound() public view returns (uint256) {
+    return (address(this).balance/(1 ether));
+  }
+
+  function getWinners() public {
+    /* Here the request to the other contract is issued */
+    //uint8 winningNr = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251) + 1;
+    winningNr = 5;
+
+    if (playersByTicket[winningNr].length > 0) {
+      amountPerAddress = address(this).balance / playersByTicket[winningNr].length;
+
+      for (uint32 i = 0; i < playersByTicket[winningNr].length; i++){
+        playersByTicket[winningNr][i].transfer(amountPerAddress);
+        winners = playersByTicket[winningNr];
+      }
+    }
+    emptyMapping();
+  }
+
+  function printWinnerAccount() public view returns (address payable[] memory) {
+    return winners;
+  }
+
+  function emptyMapping() private {
+    for (uint256 i = 0; i<allPlayedNumbers.length; i++){
+      delete playersByTicket[allPlayedNumbers[i]];
+    }
+    for (uint256 i = 0; i<allPlayers.length; i++){
+      delete soldTickets[allPlayers[i]];
+    }
+    delete allPlayedNumbers;
+    delete allPlayers;
+  }
 }
 
 contract RandomNumberGenerator {
