@@ -4,21 +4,28 @@ contract Lottery {
   enum State { Closed, Open } // Define states as enum
 
   State lotteryState;
-  address oracleAddress;
-
-  mapping(address => uint8[]) soldTickets; // Map holding tickets and buyer addresses
+  mapping(address => uint32[]) soldTickets; // Map holding tickets and buyer addresses
+  mapping(uint32 => address payable[]) playersByTicket; // Map holding tickets and buyer addresses
+  uint256 public amountPerAddress;
+  uint32 public winningNr;
+  uint32[] allPlayedNumbers;
+  address payable[] allPlayers;
+  address payable[] winners;
 
   constructor() public {
     lotteryState = State.Closed;
   }
 
-  function buyTicket(uint8 _ticketNr) public payable {
-    require(_ticketNr < 251 && _ticketNr > 0, "Ticket number must be in range [0, 250]"); // Prevent overflow of uint8
+  function buyTicket(uint32 _ticketNr) public payable {
+    require(_ticketNr < 251 && _ticketNr > 0, "Ticket number must be in range [0, 250]");
     require(msg.value >= 1, "A ticket costs 1 Ether"); // Checks if enough ether is sent to buy a lottery ticket
     soldTickets[msg.sender].push(_ticketNr);
+    playersByTicket[_ticketNr].push(msg.sender);
+    allPlayedNumbers.push(_ticketNr);
+    allPlayers.push(msg.sender);
   }
 
-  function getOwnTickets() public view returns (uint8[] memory) {
+  function getOwnTickets() public view returns (uint32[] memory) {
     return soldTickets[msg.sender];
   }
 
@@ -29,11 +36,12 @@ contract Lottery {
   function setLotteryState(State _lotteryState) public {
     lotteryState = _lotteryState;
   }
-
+  
   function callOracle(address _oracleAddress) public {
     RandomNumberGenerator oracle = RandomNumberGenerator(_oracleAddress);
     /* uint8 winnerNr = oracle.getRandomNumber(); */
   }
+
 
 }
 
