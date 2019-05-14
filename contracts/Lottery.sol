@@ -71,11 +71,11 @@ contract Lottery {
       }
     }
 
-    //Empty teh mappings for a new round --> May move this to teh state where a new round is opened.
+    //Empty the mappings for a new round --> May move this to the state where a new round is opened.
     emptyMapping();
   }
 
-  //Used to print the winners in teh frontend.
+  //Used to print the winners in the frontend.
   function printWinnerAccount() public view returns (address payable[] memory) {
     return winners;
   }
