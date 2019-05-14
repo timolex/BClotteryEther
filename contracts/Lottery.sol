@@ -4,11 +4,12 @@ contract Lottery {
   enum State { Closed, Open } // Define states as enum
 
   State lotteryState;
-  mapping(address => uint8[]) soldTickets;                // Map holding all tickets by address
-  mapping(uint8 => address payable[]) playersByTicket;    // Map holding all addresses by ticket
+
+  mapping(address => uint32[]) soldTickets;                // Map holding all tickets by address
+  mapping(uint32 => address payable[]) playersByTicket;    // Map holding all addresses by ticket
   uint256 public amountPerAddress;    //Winnable amount per player.
-  uint8 public winningNr;             //Winning number
-  uint8[] allPlayedNumbers;           //Array of all played numbers
+  uint32 public winningNr;            //Winning number
+  uint32[] allPlayedNumbers;          //Array of all played numbers
   address payable[] allPlayers;       //Array of all players
   address payable[] winners;          //Array of winners.
 
@@ -18,8 +19,8 @@ contract Lottery {
   }
 
   //Here players can buy tickets when the inserted number is bewtween 1 and 250 and 1Ether is stake
-  function buyTicket(uint8 _ticketNr) public payable {
-    require(_ticketNr < 251 && _ticketNr > 0, "Ticket number must be in range [0, 250]");   // Prevent overflow of uint8
+  function buyTicket(uint32 _ticketNr) public payable {
+    require(_ticketNr < 251 && _ticketNr > 0, "Ticket number must be in range [0, 250]");   // Prevent overflow of uint32
     require(msg.value >= 1, "A ticket costs 1 Ether");    // Checks if enough ether is sent to buy a lottery ticket
 
     //Check if PLayer already played --> Prevention of duplicates in allPlayersArray.
@@ -34,7 +35,7 @@ contract Lottery {
   }
 
   //Get tickets played by a user
-  function getOwnTickets() public view returns (uint8[] memory) {
+  function getOwnTickets() public view returns (uint32[] memory) {
     return soldTickets[msg.sender];
   }
 
@@ -54,7 +55,7 @@ contract Lottery {
   //Get the winner, distribute the balance and transfer teh coins.
   function getWinners() public {
     /* Here the request to the other contract is issued */
-    //uint8 winningNr = uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251) + 1;
+    //uint32 winningNr = uint32(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251) + 1;
     winningNr = 5;
 
     if (playersByTicket[winningNr].length > 0) {
@@ -62,7 +63,7 @@ contract Lottery {
       amountPerAddress = address(this).balance / playersByTicket[winningNr].length;
 
       //Transfer all coins to the winners & create list of winners.
-      for (uint8 i = 0; i < playersByTicket[winningNr].length; i++){
+      for (uint32 i = 0; i < playersByTicket[winningNr].length; i++){
         playersByTicket[winningNr][i].transfer(amountPerAddress);
         winners = playersByTicket[winningNr];
       }
@@ -98,5 +99,5 @@ contract Lottery {
 
 //Interface
 contract RandomNumberGenerator {
-  function getRandomNumber() public returns (uint8);
+  function getRandomNumber() public returns (uint32);
 }
