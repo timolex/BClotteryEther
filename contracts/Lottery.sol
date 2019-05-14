@@ -12,10 +12,12 @@ contract Lottery {
   uint32[] allPlayedNumbers;          //Array of all played numbers
   address payable[] allPlayers;       //Array of all players
   address payable[] winners;          //Array of winners.
+  address owner;                      //Address of the contract owner
 
   //Constructor which is called directly after deploying the contract.
   constructor() public {
     lotteryState = State.Closed;
+    owner = msg.sender;
   }
 
   //Here players can buy tickets when the inserted number is bewtween 1 and 250 and 1Ether is stake
@@ -47,23 +49,23 @@ contract Lottery {
     lotteryState = _lotteryState;
   }
 
-  //Get the winnable jackpot of this lottry round
+  function getRandomNumberFromOracle(address _oracleAddress) public returns (uint32) {
+    RandomNumberGenerator oracle = RandomNumberGenerator(_oracleAddress);
+    return oracle.getRandomNumber();
+  }
+
   function getPotOfLotteryRound() public view returns (uint256) {
     return (address(this).balance/(1 ether));
   }
 
-  //Get the winner, distribute the balance and transfer teh coins.
-  function getWinners() public {
-    /* Here the request to the other contract is issued */
-    //uint32 winningNr = uint32(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty)))%251) + 1;
-    winningNr = 5;
+  function drawWinners(address _oracleAddress) public {
+    winningNr = getRandomNumberFromOracle(_oracleAddress);
 
     if (playersByTicket[winningNr].length > 0) {
       //Get the won amount per winner
       amountPerAddress = address(this).balance / playersByTicket[winningNr].length;
 
-      //Transfer all coins to the winners & create list of winners.
-      for (uint32 i = 0; i < playersByTicket[winningNr].length; i++){
+      for (uint32 i = 0; i < playersByTicket[winningNr].length; ++i){
         playersByTicket[winningNr][i].transfer(amountPerAddress);
         winners = playersByTicket[winningNr];
       }
@@ -82,12 +84,12 @@ contract Lottery {
   function emptyMapping() private {
 
     //delete the playersByTicket mapping
-    for (uint256 i = 0; i<allPlayedNumbers.length; i++){
+    for (uint256 i = 0; i<allPlayedNumbers.length; ++i){
       delete playersByTicket[allPlayedNumbers[i]];
     }
 
     //delete the soldTickets mapping
-    for (uint256 i = 0; i<allPlayers.length; i++){
+    for (uint256 i = 0; i<allPlayers.length; ++i){
       delete soldTickets[allPlayers[i]];
     }
 
