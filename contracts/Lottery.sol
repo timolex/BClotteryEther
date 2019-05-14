@@ -4,7 +4,6 @@ contract Lottery {
   enum State { Closed, Open } // Define states as enum
 
   State lotteryState;
-
   mapping(address => uint32[]) soldTickets;                // Map holding all tickets by address
   mapping(uint32 => address payable[]) playersByTicket;    // Map holding all addresses by ticket
   uint256 public amountPerAddress;    //Winnable amount per player.
@@ -12,7 +11,7 @@ contract Lottery {
   uint32[] allPlayedNumbers;          //Array of all played numbers
   address payable[] allPlayers;       //Array of all players
   address payable[] winners;          //Array of winners.
-  address owner;                      //Address of the contract owner
+  address public owner;                      //Address of the contract owner
 
   //Constructor which is called directly after deploying the contract.
   constructor() public {

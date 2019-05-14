@@ -1,18 +1,36 @@
 import React from "react";
-import PropTypes from 'prop-types'
 import {
   AccountData,
   ContractData,
   ContractForm,
 } from "drizzle-react-components";
+import PropTypes from 'prop-types'
 
 import logo from "./logo.png";
 
 class MyComponent extends React.Component {
 
   constructor(props, context) {
-    super(props)
-    this.contracts = context.drizzle.contracts
+    super(props);
+    this.contracts = context.drizzle.contracts;
+    this.state = {
+      isOwner: false
+    }
+    this.setIsOwner();
+  }
+
+  setIsOwner() {
+    this.contracts.Lottery.methods.owner().call( (err, res) => {
+      this.setState({
+        isOwner: this.props.accounts[0] === res
+      });
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.accounts[0] !== prevProps.accounts[0]) {
+      this.setIsOwner();
+    }
   }
 
   drawWinners() {
@@ -83,22 +101,26 @@ class MyComponent extends React.Component {
           </p>
         </div>
 
-        <div className="section">
-          <h3>Winners</h3>
-          <p>
-            <button onClick={this.drawWinners.bind(this)}>Draw Winners</button>
-          </p>
-          <p>Winners:&nbsp;
-            <ContractData contract="Lottery" method="printWinnerAccount" />
-          </p>
-          <p>Amount won:&nbsp;
-            <ContractData contract="Lottery" method="amountPerAddress" />
-          </p>
-        </div>
+        {this.state.isOwner &&
+          <div className="section">
+            <h3>Winners</h3>
+            <p>
+              <button onClick={this.drawWinners.bind(this)}>Draw Winners</button>
+            </p>
+            <p>Winners:&nbsp;
+              <ContractData contract="Lottery" method="printWinnerAccount" />
+            </p>
+            <p>Amount won:&nbsp;
+              <ContractData contract="Lottery" method="amountPerAddress" />
+            </p>
+          </div>
+        }
+
       </div>
     );
   }
 }
+
 
 MyComponent.contextTypes = {
   drizzle: PropTypes.object
