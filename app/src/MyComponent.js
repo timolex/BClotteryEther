@@ -40,14 +40,14 @@ class MyComponent extends React.Component {
     }
   }
 
-  drawWinners() {
+  drawWinners(lotteryMode) {
     // Get address of random number generator smart contract
     let randomNumberGeneratorAddress = null;
     if (this.props.drizzleStatus.initialized) {
       randomNumberGeneratorAddress = this.contracts.RandomNumberGenerator.address;
     }
     // Call lottery contract
-    this.contracts.Lottery.methods.drawWinners(randomNumberGeneratorAddress).send();
+    this.contracts.Lottery.methods.drawWinners(randomNumberGeneratorAddress, lotteryMode).send();
   }
 
   render() {
@@ -165,6 +165,53 @@ class MyComponent extends React.Component {
           </div>
           }
         </div>
+
+        {this.state.isOwner &&
+          <div className="section">
+            <h3>Options</h3>
+            {lotteryState === "1" &&
+              <div>
+                <p>
+                  <button onClick={this.drawWinners.bind(this, 0)}>Draw Winners</button>
+                </p>
+                <p>
+                  <button onClick={this.drawWinners.bind(this, 1)}>Draw Winners (DEV)</button>
+                </p>
+              </div>
+
+            }
+            {lotteryState === "0" &&
+              <div>
+                <p>Winners:</p>
+                <ContractData contract="Lottery" method="printWinnerAccount" />
+                <p>
+                  Amount won:&nbsp;
+                  <ContractData contract="Lottery" method="amountPerAddress" />
+                </p>
+                <p>
+                  <ContractForm
+                    contract="Lottery"
+                    method="openLottery"
+                    render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
+                      <form onSubmit={handleSubmit}>
+                          <div>
+                          <button
+                            style={{ width: 130, height: 28, fontSize: 14}}
+                            key="submit"
+                            type="button"
+                            onClick={handleSubmit}
+                          >
+                            Reopen Lottery
+                          </button>
+                          </div>
+                      </form>
+                    )} />
+                </p>
+              </div>
+            }
+          </div>
+        }
+
       </div>
     );
   }
