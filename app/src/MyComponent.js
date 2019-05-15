@@ -79,7 +79,7 @@ class MyComponent extends React.Component {
         <div id="Options">
         {this.state.isOwner &&
           <div>
-            <h3>Options</h3>
+            <h2>Options</h2>
             {lotteryState === "1" &&
             <div>
             <p>
@@ -92,9 +92,9 @@ class MyComponent extends React.Component {
             }
             {lotteryState === "0" &&
               <div>
-                <p>Winners:</p>
+                <p id="Winners">Winners:</p>
                 <ContractData contract="Lottery" method="printWinnerAccount" hideIndicator="true"/>
-                <p>
+                <p  id="AmountWon">
                   Amount won:&nbsp;
                   <ContractData
                     contract="Lottery"
@@ -133,9 +133,9 @@ class MyComponent extends React.Component {
         </div>
 
         <div id="Lottery">
-          <h2>Lottery</h2>
+          <h3>Lottery</h3>
           {lotteryState === "0" &&
-            <h3>is closed</h3>
+            <h2>is closed</h2>
           }
           {lotteryState === "1" &&
           <div>
@@ -173,14 +173,18 @@ class MyComponent extends React.Component {
                 </form>
               )}
             />
-            <p> Your lottery tickets:</p>
-            <ContractData contract="Lottery" method="getOwnTickets" hideIndicator="true" />
+            <h2> Your lottery tickets:</h2>
+            <div id="LotteryNumbers">
+              <ul>
+                  <ContractData contract="Lottery" method="getOwnTickets" hideIndicator="true" />
+              </ul>
+            </div>
           </div>
           }
         </div>
 
-        <div id="ActiveAccount">
-          <h2>Active Account</h2>
+      <div id="ActiveAccount">
+          <h3>Active Account</h3>
           <AccountData accountIndex="0" units="ether" precision="3" />
         </div>
 
