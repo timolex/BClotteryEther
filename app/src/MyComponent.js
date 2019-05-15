@@ -58,18 +58,68 @@ class MyComponent extends React.Component {
     }
 
     return (
-      <div className="App">
+      <div className="App" >
         <div>
-          <img src={logo} alt="drizzle-logo" />
           <h1>BlockchainLottery Group Ether</h1>
         </div>
 
-        <div className="section">
+        <div id="JackPot">
+          <div>
+            <h3>Jackpot</h3>
+            <p><ContractData contract="Lottery" method="getPotOfLotteryRound" hideIndicator="true"/> Ether</p>
+          </div>
+        </div>
+
+        <div id="Options">
+        {this.state.isOwner &&
+          <div>
+            <h3>Options</h3>
+            {lotteryState === "1" &&
+              <p>
+                <button class="Button" onClick={this.drawWinners.bind(this)}>Draw Winners</button>
+              </p>
+            }
+            {lotteryState === "0" &&
+              <div>
+                <p>Winners:</p>
+                <ContractData contract="Lottery" method="printWinnerAccount" hideIndicator="true"/>
+                <p>
+                  Amount won:&nbsp;
+                  <ContractData contract="Lottery" method="amountPerAddress" hideIndicator="true"/>
+                </p>
+                <p>
+                  <ContractForm
+                    contract="Lottery"
+                    method="openLottery"
+                    hideIndicator="true"
+                    render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
+                      <form onSubmit={handleSubmit}>
+                          <div>
+                          <button
+                            class="Button"
+                            style={{ width: 130, height: 28, fontSize: 14}}
+                            key="submit"
+                            type="button"
+                            onClick={handleSubmit}
+                          >
+                            Reopen Lottery
+                          </button>
+                          </div>
+                      </form>
+                    )} />
+                </p>
+              </div>
+            }
+          </div>
+        }
+        </div>
+
+        <div className="section" id="ActiveAccount">
           <h2>Active Account</h2>
           <AccountData accountIndex="0" units="ether" precision="3" />
         </div>
 
-        <div className="section">
+        <div className="section" id="Lottery">
           <h2>Lottery</h2>
           {lotteryState === "0" &&
             <h3>is closed</h3>
@@ -86,7 +136,8 @@ class MyComponent extends React.Component {
                   {inputs.map((input, index) => (
                     <div>
                     <input
-                      style={{ fontSize: 18, width: 80}}
+                      class="Input"
+                      style={{ fontSize: 18, width:100}}
                       key={input.name} type={inputTypes[index]}
                       name={input.name}
                       value={state[input.name]}
@@ -99,6 +150,7 @@ class MyComponent extends React.Component {
                       style={{ marginLeft: 10}}
                       key="submit"
                       type="button"
+                      class="Button"
                       onClick={handleSubmit}
                       >
                       Enter
@@ -109,57 +161,10 @@ class MyComponent extends React.Component {
               )}
             />
             <p> Your lottery tickets:</p>
-            <ContractData contract="Lottery" method="getOwnTickets" />
-            <div className="section">
-              <h3>Pot</h3>
-              <p>Amount of the jackpot (Ether):&nbsp;
-                <ContractData contract="Lottery" method="getPotOfLotteryRound" />
-                </p>
-                </div>
+            <ContractData contract="Lottery" method="getOwnTickets" hideIndicator="true" />
           </div>
           }
         </div>
-
-        {this.state.isOwner &&
-          <div className="section">
-            <h3>Options</h3>
-            {lotteryState === "1" &&
-              <p>
-                <button onClick={this.drawWinners.bind(this)}>Draw Winners</button>
-              </p>
-            }
-            {lotteryState === "0" &&
-              <div>
-                <p>Winners:</p>
-                <ContractData contract="Lottery" method="printWinnerAccount" />
-                <p>
-                  Amount won:&nbsp;
-                  <ContractData contract="Lottery" method="amountPerAddress" />
-                </p>
-                <p>
-                  <ContractForm
-                    contract="Lottery"
-                    method="openLottery"
-                    render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
-                      <form onSubmit={handleSubmit}>
-                          <div>
-                          <button
-                            style={{ width: 130, height: 28, fontSize: 14}}
-                            key="submit"
-                            type="button"
-                            onClick={handleSubmit}
-                          >
-                            Reopen Lottery
-                          </button>
-                          </div>
-                      </form>
-                    )} />
-                </p>
-              </div>
-            }
-          </div>
-        }
-
       </div>
     );
   }

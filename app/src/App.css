@@ -1,10 +1,118 @@
 .App {
   text-align: center;
-  margin: 2rem;
+  margin-top: 2em;
 }
+
+body {
+  background-color: #282828;
+  color: #ebdbb2;
+}
+
+h1 {
+  font-size: 60px
+}
+
 
 .section {
   text-align: left;
   max-width: 720px;
   margin: 4rem auto auto;
+}
+
+.Button {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: 3px solid #ebdbb2;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  font: normal 16px/normal "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: rgba(235,219,178,1);
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: #4f4f4f;
+  outline:none;
+}
+
+.Button:hover {
+  color: #282828;
+  background: #ebdbb2;
+  outline:none;
+}
+
+.Button:active {
+  color: rgba(235,219,178,1);
+  background: #4f4f4f;
+  outline:none;
+}
+
+.Input {
+  display: inline-block;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 30em;
+  cursor: pointer;
+  padding: 10px;
+  border: 0 solid #ffffff;
+  border-bottom: 4px solid #ebdbb2;
+  font: normal 16px/normal "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: #ebdbb2;
+  -o-text-overflow: clip;
+  text-overflow: clip;
+  background: rgba(255,255,255,0);
+  outline:none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+ #ActiveAccount {
+  background-color: red;
+}
+
+#Options {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  border: 3px solid #ebdbb2;
+  -webkit-border-radius: 10px;
+  height: auto;
+  padding: 10px 20px;
+  padding-top: 0px;
+}
+
+
+#JackPot {
+  width: 800px;
+  margin: auto;
+  text-align: center;
+  border: 3px solid #ebdbb2;
+  -webkit-border-radius: 10px;
+  height: auto;
+  padding: 0px;
+}
+
+h3 {
+  margin: 0px;
+}
+
+
+
+#Lottery {
+  background-color: yellow;
+}
+
+.container {
+    width: 800px;
+    height: 200px;
+    background: aqua;
+    margin: auto;
+    padding: 10px;
 }
