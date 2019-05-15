@@ -137,8 +137,23 @@ class MyComponent extends React.Component {
                   <ContractData contract="Lottery" method="amountPerAddress" />
                 </p>
                 <p>
-                  Open Lottery:
-                  <ContractForm contract="Lottery" method="openLottery" />
+                  <ContractForm
+                    contract="Lottery"
+                    method="openLottery"
+                    render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
+                      <form onSubmit={handleSubmit}>
+                          <div>
+                          <button
+                            style={{ width: 130, height: 28, fontSize: 14}}
+                            key="submit"
+                            type="button"
+                            onClick={handleSubmit}
+                          >
+                            Reopen Lottery
+                          </button>
+                          </div>
+                      </form>
+                    )} />
                 </p>
               </div>
             }
