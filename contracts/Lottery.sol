@@ -12,7 +12,6 @@ contract Lottery {
   uint32 winningNrDev = 5;
   uint32[] allPlayedNumbers;          // Array of all played numbers
   address payable[] allPlayers;       // Array of all players
-  address payable[] winners;          // Array of winners.
   address public owner;               // Address of the contract owner
 
   // Constructor which is called directly after deploying the contract.
@@ -50,6 +49,7 @@ contract Lottery {
 
   function openLottery() public onlyOwner {
     lotteryState = State.Open;
+    emptyMapping();
   }
 
   function getRandomNumberFromOracle(address _oracleAddress) public returns (uint32) {
@@ -72,17 +72,15 @@ contract Lottery {
 
       for (uint32 i = 0; i < playersByTicket[winningNr].length; ++i){
         playersByTicket[winningNr][i].transfer(amountPerAddress);
-        winners = playersByTicket[winningNr];
       }
     }
 
     // Empty the mappings for a new round --> May move this to the state where a new round is opened.
-    emptyMapping();
   }
 
   // Used to print the winners in the frontend.
   function printWinnerAccount() public view returns (address payable[] memory) {
-    return winners;
+    return playersByTicket[winningNr];
   }
 
   // Emptying of the mappings and arrays, such that a new round can be started.
@@ -101,6 +99,7 @@ contract Lottery {
     // Delete the two helper arrays.
     delete allPlayedNumbers;
     delete allPlayers;
+    amountPerAddress = 0;
   }
 }
 

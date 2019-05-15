@@ -59,7 +59,7 @@ class MyComponent extends React.Component {
     return (
       <div className="App" >
         <div>
-          <h1>BlockchainLottery Group Ether</h1>
+          <h1>Blockchain Lottery</h1>
         </div>
 
         <div id="JackPot">
@@ -128,6 +128,11 @@ class MyComponent extends React.Component {
                 </p>
               </div>
             }
+          </div>
+        }
+        {!this.state.isOwner &&
+          <div>
+            <p> This is the blockchain lottery of team Ether.  </p>
           </div>
         }
         </div>
