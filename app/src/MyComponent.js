@@ -6,8 +6,6 @@ import {
 } from "drizzle-react-components";
 import PropTypes from 'prop-types'
 
-import logo from "./logo.png";
-
 class MyComponent extends React.Component {
   state = {
     isOwner: null,
@@ -16,7 +14,8 @@ class MyComponent extends React.Component {
 
   constructor(props, context) {
     super(props);
-    this.contracts = context.drizzle.contracts;
+    this.contracts = context.drizzle.contracts
+    this.web3 = context.drizzle.web3;
   }
 
   componentDidMount() {
@@ -66,7 +65,14 @@ class MyComponent extends React.Component {
         <div id="JackPot">
           <div>
             <h3>Jackpot</h3>
-            <p><ContractData contract="Lottery" method="getPotOfLotteryRound" hideIndicator="true"/> Ether</p>
+            <ContractData
+              contract="Lottery"
+              method="getPotOfLotteryRound"
+              hideIndicator="true"
+              render={displayData => {
+                return <p>{this.web3.utils.fromWei(displayData.toString(), "ether")} ETH</p>
+              }}
+            />
           </div>
         </div>
 
@@ -90,7 +96,14 @@ class MyComponent extends React.Component {
                 <ContractData contract="Lottery" method="printWinnerAccount" hideIndicator="true"/>
                 <p>
                   Amount won:&nbsp;
-                  <ContractData contract="Lottery" method="amountPerAddress" hideIndicator="true"/>
+                  <ContractData
+                    contract="Lottery"
+                    method="amountPerAddress"
+                    hideIndicator="true"
+                    render={displayData => {
+                      return <p>{this.web3.utils.fromWei(displayData.toString(), "ether")} ETH</p>
+                    }}
+                  />
                 </p>
                 <p>
                   <ContractForm
@@ -170,12 +183,10 @@ class MyComponent extends React.Component {
           <h2>Active Account</h2>
           <AccountData accountIndex="0" units="ether" precision="3" />
         </div>
-
       </div>
     );
   }
 }
-
 
 MyComponent.contextTypes = {
   drizzle: PropTypes.object

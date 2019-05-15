@@ -58,7 +58,7 @@ contract Lottery {
   }
 
   function getPotOfLotteryRound() public view returns (uint256) {
-    return (address(this).balance/(1 ether));
+    return address(this).balance;
   }
 
   function drawWinners(address _oracleAddress, Mode _lotteryMode) public onlyOwner {
