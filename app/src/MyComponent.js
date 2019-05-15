@@ -75,9 +75,14 @@ class MyComponent extends React.Component {
           <div>
             <h3>Options</h3>
             {lotteryState === "1" &&
-              <p>
-                <button class="Button" onClick={this.drawWinners.bind(this)}>Draw Winners</button>
-              </p>
+            <div>
+            <p>
+              <button class="Button" onClick={this.drawWinners.bind(this, 0)}>Draw Winners</button>
+            </p>
+            <p>
+              <button class="Button"  onClick={this.drawWinners.bind(this, 1)}>Draw Winners (DEV)</button>
+            </p>
+            </div>
             }
             {lotteryState === "0" &&
               <div>
@@ -114,12 +119,7 @@ class MyComponent extends React.Component {
         }
         </div>
 
-        <div className="section" id="ActiveAccount">
-          <h2>Active Account</h2>
-          <AccountData accountIndex="0" units="ether" precision="3" />
-        </div>
-
-        <div className="section" id="Lottery">
+        <div id="Lottery">
           <h2>Lottery</h2>
           {lotteryState === "0" &&
             <h3>is closed</h3>
@@ -166,51 +166,10 @@ class MyComponent extends React.Component {
           }
         </div>
 
-        {this.state.isOwner &&
-          <div className="section">
-            <h3>Options</h3>
-            {lotteryState === "1" &&
-              <div>
-                <p>
-                  <button onClick={this.drawWinners.bind(this, 0)}>Draw Winners</button>
-                </p>
-                <p>
-                  <button onClick={this.drawWinners.bind(this, 1)}>Draw Winners (DEV)</button>
-                </p>
-              </div>
-
-            }
-            {lotteryState === "0" &&
-              <div>
-                <p>Winners:</p>
-                <ContractData contract="Lottery" method="printWinnerAccount" />
-                <p>
-                  Amount won:&nbsp;
-                  <ContractData contract="Lottery" method="amountPerAddress" />
-                </p>
-                <p>
-                  <ContractForm
-                    contract="Lottery"
-                    method="openLottery"
-                    render={({ inputs, inputTypes, state, handleInputChange, handleSubmit })=> (
-                      <form onSubmit={handleSubmit}>
-                          <div>
-                          <button
-                            style={{ width: 130, height: 28, fontSize: 14}}
-                            key="submit"
-                            type="button"
-                            onClick={handleSubmit}
-                          >
-                            Reopen Lottery
-                          </button>
-                          </div>
-                      </form>
-                    )} />
-                </p>
-              </div>
-            }
-          </div>
-        }
+      <div id="ActiveAccount">
+          <h2>Active Account</h2>
+          <AccountData accountIndex="0" units="ether" precision="3" />
+        </div>
 
       </div>
     );
