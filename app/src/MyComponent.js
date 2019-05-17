@@ -4,7 +4,7 @@ import {
   ContractData,
   ContractForm,
 } from "drizzle-react-components";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 class MyComponent extends React.Component {
   state = {
@@ -14,7 +14,7 @@ class MyComponent extends React.Component {
 
   constructor(props, context) {
     super(props);
-    this.contracts = context.drizzle.contracts
+    this.contracts = context.drizzle.contracts;
     this.web3 = context.drizzle.web3;
   }
 
@@ -70,7 +70,7 @@ class MyComponent extends React.Component {
               method="getPotOfLotteryRound"
               hideIndicator="true"
               render={displayData => {
-                return <p>{this.web3.utils.fromWei(displayData.toString(), "ether")} ETH</p>
+                  return (<p>{this.web3.utils.fromWei(displayData.toString(), "ether")} ETH</p>);
               }}
             />
           </div>
@@ -101,7 +101,7 @@ class MyComponent extends React.Component {
                     method="amountPerAddress"
                     hideIndicator="true"
                     render={displayData => {
-                      return <p>{this.web3.utils.fromWei(displayData.toString(), "ether")} ETH</p>
+                        return (<p>{this.web3.utils.fromWei(displayData.toString(), "ether")} ETH</p>);
                     }}
                   />
                 </p>
