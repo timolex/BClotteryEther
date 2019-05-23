@@ -29,7 +29,7 @@ contract Lottery {
   function buyTicket(uint32 _ticketNr) public payable {
     require(lotteryState == State.Open, "Lottery is closed");
     require(_ticketNr < 251 && _ticketNr > 0, "Ticket number must be in range [0, 250]");
-    require(msg.value >= 1, "A ticket costs 1 Ether");    // Checks if enough ether is sent to buy a lottery ticket
+    require(msg.value >= 1 ether, "A ticket costs 1 Ether");    // Checks if enough ether is sent to buy a lottery ticket
 
     // Check if PLayer already played --> Prevention of duplicates in allPlayersArray.
     if (soldTickets[msg.sender].length == 0) {
@@ -53,7 +53,7 @@ contract Lottery {
   }
 
   function getRandomNumberFromOracle(address _oracleAddress) public returns (uint32) {
-    RandomNumberGenerator oracle = RandomNumberGenerator(_oracleAddress);
+    RandomNumberGeneratorInterface oracle = RandomNumberGeneratorInterface(_oracleAddress);
     return oracle.getRandomNumber();
   }
 
@@ -104,6 +104,6 @@ contract Lottery {
 }
 
 // Interface
-contract RandomNumberGenerator {
+contract RandomNumberGeneratorInterface {
   function getRandomNumber() public returns (uint32);
 }

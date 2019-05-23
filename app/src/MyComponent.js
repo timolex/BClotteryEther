@@ -57,7 +57,7 @@ class MyComponent extends React.Component {
     }
 
     return (
-      <div className="App" >
+      <div className="App">
         <div>
           <h1>Blockchain Lottery</h1>
         </div>
@@ -139,9 +139,14 @@ class MyComponent extends React.Component {
 
         <div id="Lottery">
           <h3>Lottery</h3>
-          {lotteryState === "0" &&
-            <h2>is closed</h2>
-          }
+            {lotteryState === "0" &&
+             <div>
+               <h2>is closed</h2>
+               <p>Last lottery draw winning number:</p>
+               <ContractData id="winningNr" contract="Lottery" method="winningNr" hideIndicator="true" />
+               <p/>
+             </div>
+            }
           {lotteryState === "1" &&
           <div>
             <p>Choose a number for the lottery (1 Ether):</p>

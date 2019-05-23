@@ -97,7 +97,11 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
- #ActiveAccount {
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+#ActiveAccount {
   width: 40%;
   margin: auto;
   margin-top: 10px;
